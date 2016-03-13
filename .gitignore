@@ -1,0 +1,9 @@
+# ignore emacs temp and backup file
+*~
+\#*\#
+
+# ignore data file .csv
+#*.csv
+
+# ignore precompiled python lib
+*.pyc
