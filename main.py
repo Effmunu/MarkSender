@@ -45,7 +45,7 @@ def main(argv):
 
     # open the selection interface
     _, _, bool_array = seli.gui(topic_list, student_list)
-    # convert the arra
+    # convert the array
     to_send_array = seli.to_std_2Darray(bool_array)
 
     for student_nb in range(len(student_list)):
