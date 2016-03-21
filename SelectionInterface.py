@@ -47,23 +47,14 @@ def gui(topic_list, student_list):
 
     nb_student = len(student_list)
     nb_topic = len(topic_list)
+    # note that tk.BooleanVar() value is False by default
     # prepare the boolean array for student global controllers
-    bool_student = []
-    for student in range(nb_student):
-        bool_student.append(tk.BooleanVar())
-        bool_student[student].set(False)
+    bool_student = [tk.BooleanVar() for student in range(nb_student)]
     # prepare the boolean array for topic global controllers
-    bool_topic = []
-    for topic in range(nb_topic):
-        bool_topic.append(tk.BooleanVar())
-        bool_topic[topic].set(False)
+    bool_topic = [tk.BooleanVar() for topic in range(nb_topic)]
     # prepare the boolean 2D array for single controllers
-    bool_array = []
-    for student in range(nb_student):
-        bool_array.append([])
-        for topic in range(nb_topic):
-            bool_array[student].append(tk.BooleanVar())
-            bool_array[student][topic].set(False)
+    bool_array = [[tk.BooleanVar() for topic in range(nb_topic)] \
+                                   for student in range(nb_student)]
 
 
     # Now display the elements
@@ -139,10 +130,7 @@ def to_std_1Darray(bool_list):
     :param bool_array: 1D array of BooleanVar
     :return: 1D array of int
     """
-    l = []
-    for b in bool_list:
-        l.append( 1 if b.get() else 0 )
-    return l
+    return [1 if b.get() else 0 for b in bool_list]
 
 
 def to_std_2Darray(bool_array):
@@ -152,10 +140,7 @@ def to_std_2Darray(bool_array):
     :param bool_array: 2D array of BooleanVar
     :return: 2D array of int
     """
-    ll = []
-    for b_list in bool_array:
-        ll.append(to_std_1Darray(b_list))
-    return ll
+    return [to_std_1Darray(b_list) for b_list in bool_array]
 
 
 def print_BooleanVar_map(bool_topic, bool_student, bool_array):
