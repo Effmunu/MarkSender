@@ -31,11 +31,11 @@ def build_body(student_nb, topic_list, data, to_send_array):
     msg = "Hello,\n"
     nb_topics_to_send = 0
     for topic_nb in range(len(topic_list)):
+        # if the topic has not been selected for this student
         if not to_send_array[student_nb][topic_nb]:
-            # if the topic has not been selected for this student
             continue
+        # if no mark was entered for this student at this topic
         if data[student_nb+4][topic_nb+3] == '':
-            # if no mark was entered for this student at this topic
             continue
         nb_topics_to_send += 1
         line_buffer = "Your mark for %s is %s. Mean is %s, highest grade is %s, lowest grade is %s.\n" \
@@ -47,12 +47,13 @@ def build_body(student_nb, topic_list, data, to_send_array):
         msg += line_buffer
     msg += "Have a good day,\n"
     msg += "Antoine Laudrain"
+
+    # if no mark was registered in the database or no topic selected,
+    # no need for sending a message.
     if nb_topics_to_send == 0:
-        # if no mark was registered in the database or no topic selected,
-        # no need for sending a message.
         return ""
+    # else, returns the message
     else:
-        # else, returns the message
         return msg
 
 
