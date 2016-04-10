@@ -21,3 +21,6 @@ TODO: option for dry-run (parser in main ?)
 TODO: behaviour of ABORT button in SelectionInterface (quit all the program) ?
     (care with its docstring then)
 
+TODO: warning if no mail.
+TODO: untickable button if unfilled cell. But considered as ticked for global
+    ticking.
