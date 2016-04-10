@@ -61,23 +61,26 @@ class TopicCheckbutton(tk.Checkbutton):
         student_nb = len(self.bool_student)
         topic_nb = len(self.bool_topic)
 
+        # if we untick a whole topic
         if not self.bool_topic[self.topic].get():
-            # if we untick a whole topic
             for student in range(student_nb):
-                self.bool_array[student][self.topic].set(False)
                 # untick every box in the column
-                self.bool_student[student].set(False)
+                self.bool_array[student][self.topic].set(False)
                 # untick every student global selector
-        else: # if we tick a whole topic
+                self.bool_student[student].set(False)
+        # if we tick a whole topic
+        else:
             for student in range(student_nb):
-                self.bool_array[student][self.topic].set(True)
                 # tick every box in the column
+                self.bool_array[student][self.topic].set(True)
+                # check completeness of the line
                 topic = 0
                 while topic < topic_nb and self.bool_array[student][topic].get():
                     topic +=1
-                if topic >= topic_nb: # if the line is complete
-                    self.bool_student[student].set(True)
+                # if the line is complete
+                if topic >= topic_nb:
                     # set student global selector to 1
+                    self.bool_student[student].set(True)
                 # else the student global selector should already be 0
 
 
@@ -108,21 +111,26 @@ class StudentCheckbutton(tk.Checkbutton):
         student_nb = len(self.bool_student)
         topic_nb = len(self.bool_topic)
 
-        if not self.bool_student[self.student].get(): # if we untick a whole student
+        # if we untick a whole student
+        if not self.bool_student[self.student].get():
             for topic in range(topic_nb):
-                self.bool_array[self.student][topic].set(False)
                 # untick every box in the column
-                self.bool_topic[topic].set(False)
+                self.bool_array[self.student][topic].set(False)
                 # untick every topic global selector
-        else: # if we tick a whole student
+                self.bool_topic[topic].set(False)
+        # if we tick a whole student
+        else:
             for topic in range(topic_nb):
-                self.bool_array[self.student][topic].set(True)
                 # tick every box in the column
+                self.bool_array[self.student][topic].set(True)
+                # check completeness of the column
                 student = 0
                 while student < student_nb and self.bool_array[student][topic].get():
                     student +=1
-                if student >= student_nb: # if the line is complete
-                    self.bool_topic[topic].set(True) # set topic global selector to 1
+                # if the line is complete
+                if student >= student_nb:
+                    # set topic global selector to 1
+                    self.bool_topic[topic].set(True)
                 # else the topic global selector should already be 0
 
 
@@ -156,28 +164,31 @@ class SingleCheckbutton(tk.Checkbutton):
         student_nb = len(self.bool_student)
         topic_nb = len(self.bool_topic)
 
+        # if we untick a single pair
         if not self.bool_array[self.student][self.topic].get():
-            # if we untick a single pair
-            self.bool_topic[self.topic].set(False)
             # untick corresponding topic global selector
-            self.bool_student[self.student].set(False)
+            self.bool_topic[self.topic].set(False)
             # untick correponding student global selector
-        else: # if we tick a single pair, check if it completes a column or line
-            # completed the whole student line ?
+            self.bool_student[self.student].set(False)
+        # if we tick a single pair, check if it completes a column or line
+        # completed the whole student line ?
+        else:
             topic = 0
             while topic < topic_nb and self.bool_array[self.student][topic].get():
                 topic +=1
-            if topic >= topic_nb: # if the line is complete
-                self.bool_student[self.student].set(True)
+            # if the line is complete
+            if topic >= topic_nb:
                 # set student global selector to 1
+                self.bool_student[self.student].set(True)
             # else the student global selector should already be 0
 
             # completed the whole topic column ?
             student = 0
             while student < student_nb and self.bool_array[student][self.topic].get():
                 student +=1
-            if student >= student_nb: # if the line is complete
-                self.bool_topic[self.topic].set(True)
+            # if the line is complete
+            if student >= student_nb:
                 # set topic global selector to True
+                self.bool_topic[self.topic].set(True)
             # else the topic global selector should already be False
 

@@ -39,6 +39,8 @@ def build_list_dic(file_raw_data):
     which is shuffled.
     Dictionnaries: keys = names; values = line/column number
     ---------------
+    The dictionaries are not used anymore, can be removed...
+    ---------------
     :param file_raw_data: list of the lines in the CSV file
     :returns: data (list of list formatted csv file), topic_list, student_list,
     topic_dic, student_dic
