@@ -26,3 +26,7 @@ TODO: untickable button if unfilled cell. But considered as ticked for global
     ticking. This kind of empty tolumn should not be removed from the display:
     could be used to separate the topics if wanted (thin column in the
     display).
+    -> buttons done, now have to modify the behaviour.
+
+http://stackoverflow.com/questions/20687220/disable-checkbutton-tkinter-grey-out
+http://stackoverflow.com/questions/3295270/overriding-tkinter-x-button-control-the-button-that-close-the-window

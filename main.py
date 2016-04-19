@@ -37,7 +37,7 @@ def main(argv):
         with open(input_file_path, 'r') as input_file:
             file_raw_data = input_file.readlines()
     except IOError:
-        print "File not found :", input_file_path
+        print "File not found:", input_file_path
         return 1
 
     # build the topics and students list and dictionary
