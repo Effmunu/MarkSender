@@ -16,7 +16,7 @@ import Tkinter as tk
 from Buttons import *
 
 
-def gui(topic_list, student_list):
+def gui(data, topic_list, student_list):
     """
     GUI interface for selecting students and topics.
     We define an array of booleans, each controlling a whole student.
@@ -107,9 +107,10 @@ def gui(topic_list, student_list):
     # Fill the center zone with the array of checkboxes.
     for student in range(nb_student):
         for topic in range(nb_topic):
-            # if there are no student or topic header, the cell should not be
-            # clickable.
-            if student_list[student] == "" or topic_list[topic] == "":
+            # if there are no student or topic header, or the cell is not
+            # filled, the cell should not be clickable.
+            if student_list[student] == "" or topic_list[topic] == ""\
+                or data[student][topic] == "":
                 tk.Checkbutton(state=tk.DISABLED, master=window)\
                     .grid(row=student+2, column=topic+2)
             # otherwise, put a single button

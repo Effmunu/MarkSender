@@ -44,7 +44,7 @@ def main(argv):
     data, topic_list, student_list, _, _ = build_list_dic(file_raw_data)
 
     # open the selection interface
-    _, _, bool_array = seli.gui(topic_list, student_list)
+    _, _, bool_array = seli.gui(data, topic_list, student_list)
     # convert the array
     to_send_array = seli.to_std_2Darray(bool_array)
 

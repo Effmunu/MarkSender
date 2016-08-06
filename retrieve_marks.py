@@ -77,26 +77,26 @@ def build_list_dic(file_raw_data):
 
     # alphabetically sort data
 
-    # sort the topic columns
-    # sort the list of topics
-    topic_list.sort()
-    # fill the 3 first columns
-    topic_sorted_data = [data[line_nb][0:3] for line_nb in range(len(data))]
-    # fill the topic columns
-    for topic in topic_list:
-        topic_nb = topic_dic[topic]
-        for line_nb in range(len(data)):
-            topic_sorted_data[line_nb].append(data[line_nb][topic_nb + 3])
-
-    # sort the student lines
-    # sort the list of students
-    student_list.sort()
-    # fill the 4 first lines
-    data = [topic_sorted_data[line_nb] for line_nb in range(4)]
-    # fill the student lines
-    for student in student_list:
-        student_nb = student_dic[student]
-        data.append(topic_sorted_data[student_nb + 4])
+#    # sort the topic columns
+#    # sort the list of topics
+#    topic_list.sort()
+#    # fill the 3 first columns
+#    topic_sorted_data = [data[line_nb][0:3] for line_nb in range(len(data))]
+#    # fill the topic columns
+#    for topic in topic_list:
+#        topic_nb = topic_dic[topic]
+#        for line_nb in range(len(data)):
+#            topic_sorted_data[line_nb].append(data[line_nb][topic_nb + 3])
+#
+#    # sort the student lines
+#    # sort the list of students
+#    student_list.sort()
+#    # fill the 4 first lines
+#    data = [topic_sorted_data[line_nb] for line_nb in range(4)]
+#    # fill the student lines
+#    for student in student_list:
+#        student_nb = student_dic[student]
+#        data.append(topic_sorted_data[student_nb + 4])
 
     return data, topic_list, student_list, topic_dic, student_dic
 
