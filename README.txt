@@ -12,12 +12,14 @@ Call the program with
 
 TODO: maybe try to transform the gui function into a SelectionInterface class
 TODO: the dictionary building part in 'retrieve_marks' could be removed.
-    (I prefered to keep it on case, but it could be retrieved from previous
-    commits).
+    (I prefered to keep it even if not used, but it could be retrieved from
+    previous commits).
 TODO: The function actually sending the mail is still to be done.
     But there is a function printing the mail instead of writting them
     (dry-run).
 TODO: option for dry-run (parser in main ?)
+TODO: option for sorting topics (-t/--sort-topics) and students
+    (-s/--sort-students).
 TODO: behaviour of ABORT button in SelectionInterface (quit all the program) ?
     (care with its docstring then)
 
@@ -30,3 +32,6 @@ TODO: untickable button if unfilled cell. But considered as ticked for global
 
 http://stackoverflow.com/questions/20687220/disable-checkbutton-tkinter-grey-out
 http://stackoverflow.com/questions/3295270/overriding-tkinter-x-button-control-the-button-that-close-the-window
+
+TODO: rename main into marksender
+
