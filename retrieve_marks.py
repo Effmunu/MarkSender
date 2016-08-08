@@ -32,7 +32,7 @@ def build_list_dic(file_raw_data, sort_students, sort_topics):
     The students/topics dictionary is used for sorting. It associates the
     line/column number of the student/topic in the file read, so before sorting.
     Dictionnaries: keys = names; values = line/column number.
-
+    -------------------------------------------------------
     :param file_raw_data: list of the lines in the CSV file
     :param sort_students: boolean flag for student sorting
     :param sort_topics: boolean flag for topic sorting
