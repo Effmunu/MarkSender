@@ -13,6 +13,7 @@ Send the mails
 """
 
 import sys
+import argparse
 import SelectionInterface as seli
 from retrieve_marks import build_list_dic
 import mailUtils as mailU
@@ -21,39 +22,47 @@ def main(argv):
     """
     Main program.
     ---------------
-    :param argv: arguments in the console line. argv[0] is 'main.py'
-        should be called as python main.py path/to/CSVfile.csv
+    :param argv: described in built-in help
     :return:    0 if evertything ok,
                 1 if file couldn't be opened.
     """
 
-    # the csv file should have semi-colon (;) separated values
-    if len(argv) > 1:
-        input_file_path = argv[1]
-    else:
-        input_file_path = raw_input("Enter CSV file name: ")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_file_path", metavar="file",
+                    help="csv input file, semi-column separated")
+    parser.add_argument("-s", "--sort-students", action="store_true",
+                    help="alphabetically sort the students before the display")
+    parser.add_argument("-t", "--sort-topics", action="store_true",
+                    help="alphabetically sort the topics before display")
+    parser.add_argument("--dry-run", action="store_true",
+                    help="do everything without actually sending the mails")
 
+    args = parser.parse_args()
+
+    # the csv file should have semi-colon (;) separated values
     try:
-        with open(input_file_path, 'r') as input_file:
+        with open(args.input_file_path, 'r') as input_file:
             file_raw_data = input_file.readlines()
     except IOError:
         print "File not found:", input_file_path
         return 1
 
     # build the topics and students list and dictionary
-    data, topic_list, student_list, _, _ = build_list_dic(file_raw_data)
+    data, topic_list, student_list = build_list_dic(file_raw_data,\
+        args.sort_students, args.sort_topics)
 
     # open the selection interface
     _, _, bool_array = seli.gui(topic_list, student_list)
     # convert the array
     to_send_array = seli.to_std_2Darray(bool_array)
 
-    for student_nb in range(len(student_list)):
-        mail_body = mailU.build_body(student_nb, topic_list, data, to_send_array)
-        if mail_body == "":
-            continue
-        mailU.send_mail_fake(data[student_nb+4][2], mail_body)
-        # column 2 contains the mails
+    if not args.dry_run:
+        for student_nb in range(len(student_list)):
+            mail_body = mailU.build_body(student_nb, topic_list, data, to_send_array)
+            if mail_body == "":
+                continue
+            mailU.send_mail_fake(data[student_nb+4][2], mail_body)
+            # column 2 contains the mails
 
 
 
