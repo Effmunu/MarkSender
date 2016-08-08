@@ -34,4 +34,5 @@ http://stackoverflow.com/questions/20687220/disable-checkbutton-tkinter-grey-out
 http://stackoverflow.com/questions/3295270/overriding-tkinter-x-button-control-the-button-that-close-the-window
 
 TODO: rename main into marksender
+TODO: merge and rename build_list_dic (alone in its file).
 
