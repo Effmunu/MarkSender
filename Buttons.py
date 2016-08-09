@@ -38,13 +38,14 @@ class TopicCheckbutton(tk.Checkbutton):
     """
     Check button for selecting a whole topic
     """
-    def __init__(self, topic, bool_topic, bool_student, bool_array, master=None):
+    def __init__(self, topic, bool_topic, bool_student, bool_array, data, master=None):
         """
         Check button for global topic selector
         :param topic: topic number
         :param bool_topic: array of the topic booleans
         :param bool_student: array of the student booleans
         :param bool_array: array of the single booleans
+        :param data: data array, needed to check for empty cells
         :param master: see Tkinter.Checkbutton
         """
         tk.Checkbutton.__init__(self, master, variable=bool_topic[topic], 
@@ -53,6 +54,7 @@ class TopicCheckbutton(tk.Checkbutton):
         self.bool_topic = bool_topic
         self.bool_student = bool_student
         self.bool_array = bool_array
+        self.data = data
 
     def on_click(self):
         """
@@ -64,6 +66,9 @@ class TopicCheckbutton(tk.Checkbutton):
         # if we untick a whole topic
         if not self.bool_topic[self.topic].get():
             for student in range(student_nb):
+                if self.data[student+4][self.topic+3] == "":
+                    # if the cell is not filled, do nothing
+                    continue
                 # untick every box in the column
                 self.bool_array[student][self.topic].set(False)
                 # untick every student global selector
@@ -71,12 +76,16 @@ class TopicCheckbutton(tk.Checkbutton):
         # if we tick a whole topic
         else:
             for student in range(student_nb):
+                if self.data[student+4][self.topic+3] == "":
+                    # if the cell is not filled, do nothing
+                    continue
                 # tick every box in the column
                 self.bool_array[student][self.topic].set(True)
-                # check completeness of the line
+                # check completeness of the student line, consider empty cell as ticked
                 topic = 0
-                while topic < topic_nb and self.bool_array[student][topic].get():
-                    topic +=1
+                while topic < topic_nb and (self.bool_array[student][topic].get()\
+                                            or self.data[student+4][topic+3] == ""):
+                    topic += 1
                 # if the line is complete
                 if topic >= topic_nb:
                     # set student global selector to 1
@@ -88,13 +97,14 @@ class StudentCheckbutton(tk.Checkbutton):
     """
     Check button for selecting a whole student
     """
-    def __init__(self, student, bool_topic, bool_student, bool_array, master=None):
+    def __init__(self, student, bool_topic, bool_student, bool_array, data, master=None):
         """
         Check button for global topic selector
         :param student: student number
         :param bool_topic: array of the topic booleans
         :param bool_student: array of the student booleans
         :param bool_array: array of the single booleans
+        :param data: data array, needed to check for empty cells
         :param master: see Tkinter.Checkbutton
         """
         tk.Checkbutton.__init__(self, master, variable=bool_student[student], 
@@ -103,6 +113,7 @@ class StudentCheckbutton(tk.Checkbutton):
         self.bool_topic = bool_topic
         self.bool_student = bool_student
         self.bool_array = bool_array
+        self.data = data
 
     def on_click(self):
         """
@@ -114,6 +125,9 @@ class StudentCheckbutton(tk.Checkbutton):
         # if we untick a whole student
         if not self.bool_student[self.student].get():
             for topic in range(topic_nb):
+                if self.data[self.student+4][topic+3] == "":
+                    # if the cell is not filled, do nothing
+                    continue
                 # untick every box in the column
                 self.bool_array[self.student][topic].set(False)
                 # untick every topic global selector
@@ -121,12 +135,16 @@ class StudentCheckbutton(tk.Checkbutton):
         # if we tick a whole student
         else:
             for topic in range(topic_nb):
+                if self.data[self.student+4][topic+3] == "":
+                    # if the cell is not filled, do nothing
+                    continue
                 # tick every box in the column
                 self.bool_array[self.student][topic].set(True)
-                # check completeness of the column
+                # check completeness of the column, consider empty cell as ticked
                 student = 0
-                while student < student_nb and self.bool_array[student][topic].get():
-                    student +=1
+                while student < student_nb and (self.bool_array[student][topic].get()\
+                                                or self.data[student+4][topic+3] == ""):
+                    student += 1
                 # if the line is complete
                 if student >= student_nb:
                     # set topic global selector to 1
@@ -138,7 +156,7 @@ class SingleCheckbutton(tk.Checkbutton):
     """
     Check button for selecting a single topic/student pair
     """
-    def __init__(self, topic, student, bool_topic, bool_student, bool_array, master=None):
+    def __init__(self, topic, student, bool_topic, bool_student, bool_array, data, master=None):
         """
         Check button for global topic selector
         :param topic: topic number
@@ -146,8 +164,8 @@ class SingleCheckbutton(tk.Checkbutton):
         :param bool_topic: array of the topic booleans
         :param bool_student: array of the student booleans
         :param bool_array: array of the single booleans
+        :param data: data array, needed to check for empty cells
         :param master: see Tkinter.Checkbutton
-        :param options: see Tkinter.Checkbutton
         """
         tk.Checkbutton.__init__(self, master, variable=bool_array[student][topic], 
                                 command=self.on_click)
@@ -156,6 +174,7 @@ class SingleCheckbutton(tk.Checkbutton):
         self.bool_topic = bool_topic
         self.bool_student = bool_student
         self.bool_array = bool_array
+        self.data = data
 
     def on_click(self):
         """
@@ -170,11 +189,13 @@ class SingleCheckbutton(tk.Checkbutton):
             self.bool_topic[self.topic].set(False)
             # untick correponding student global selector
             self.bool_student[self.student].set(False)
-        # if we tick a single pair, check if it completes a column or line
-        # completed the whole student line ?
+        # if we tick a single pair, check if it completes a whole column or line;
+        # we consider empty cells as ticked
         else:
+            # completed the whole student line?
             topic = 0
-            while topic < topic_nb and self.bool_array[self.student][topic].get():
+            while topic < topic_nb and (self.bool_array[self.student][topic].get()\
+                                        or self.data[self.student+4][topic+3] == ""):
                 topic +=1
             # if the line is complete
             if topic >= topic_nb:
@@ -182,9 +203,10 @@ class SingleCheckbutton(tk.Checkbutton):
                 self.bool_student[self.student].set(True)
             # else the student global selector should already be 0
 
-            # completed the whole topic column ?
+            # completed the whole topic column?
             student = 0
-            while student < student_nb and self.bool_array[student][self.topic].get():
+            while student < student_nb and (self.bool_array[student][self.topic].get()\
+                                            or self.data[student+4][self.topic+3] == ""):
                 student +=1
             # if the line is complete
             if student >= student_nb:
