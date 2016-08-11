@@ -9,6 +9,10 @@ all other lines are taken to be students. The program can manage empty cells.
 Call the program with
     python main.py path/to/file.csv
 
+============================================================
+===== For developpers ======================================
+============================================================
+Please solve a TODO using a new branch, merge and then ask for a pull request.
 
 TODO: maybe try to transform the gui function into a SelectionInterface class
 TODO: the dictionary building part in 'retrieve_marks' could be removed.
