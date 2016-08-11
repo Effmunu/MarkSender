@@ -16,9 +16,13 @@ Help available with
 ============================================================
 Please solve a TODO using a new branch, merge and then ask for a pull request.
 
+TODO: still have to implement the actual mail sending.
+
 TODO: maybe try to transform the gui function into a SelectionInterface class
 TODO: behaviour of ABORT button in SelectionInterface (quit all the program) ?
     (care with its docstring then)
 
 TODO: warning if no mail.
+
+TODO: correct docstrings.
 
