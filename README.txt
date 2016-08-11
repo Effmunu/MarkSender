@@ -1,5 +1,4 @@
 Project to automatically send marks to students from a summary in a .csv file.
-(And trying to learn about Git in the same time.)
 
 The data should be stored in a CSV file which 3 first columns and 4 first lines
 are reserved space (template given). All other columns are taken to be topics,
@@ -16,9 +15,16 @@ Help available with
 ============================================================
 Please solve a TODO using a new branch, merge and then ask for a pull request.
 
+TODO: still have to implement the actual mail sending.
+
 TODO: maybe try to transform the gui function into a SelectionInterface class
 TODO: behaviour of ABORT button in SelectionInterface (quit all the program) ?
     (care with its docstring then)
 
 TODO: warning if no mail.
+
+TODO: correct docstrings.
+TODO: rename main into marksender
+TODO: merge and rename build_list_dic (alone in its file).
+
 
