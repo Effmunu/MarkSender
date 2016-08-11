@@ -21,15 +21,4 @@ TODO: behaviour of ABORT button in SelectionInterface (quit all the program) ?
     (care with its docstring then)
 
 TODO: warning if no mail.
-TODO: untickable button if unfilled cell. But considered as ticked for global
-    ticking. This kind of empty tolumn should not be removed from the display:
-    could be used to separate the topics if wanted (thin column in the
-    display).
-    -> buttons done, now have to modify the behaviour.
-
-http://stackoverflow.com/questions/20687220/disable-checkbutton-tkinter-grey-out
-http://stackoverflow.com/questions/3295270/overriding-tkinter-x-button-control-the-button-that-close-the-window
-
-TODO: rename main into marksender
-TODO: merge and rename build_list_dic (alone in its file).
 

@@ -97,7 +97,6 @@ def build_list_dic(file_raw_data, sort_students, sort_topics):
 
     return data, topic_list, student_list
 
-
 if __name__ == "__main__":
     input_file_path = "test_marks.csv"
     try:
