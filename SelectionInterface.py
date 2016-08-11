@@ -67,7 +67,7 @@ def gui(data, topic_list, student_list):
                 .grid(row=student+2, column=0)
         # else, make a full Student control button.
         else:
-            StudentCheckbutton(student, bool_topic, bool_student, bool_array, data, window)\
+            StudentCheckbutton(student, bool_topic, bool_student, bool_array, student_list, topic_list, data, window)\
                 .grid(row=student+2, column=0)
         # in both case, draw the labels, left and right.
         tk.Label(window, text=student_list[student])\
@@ -80,7 +80,7 @@ def gui(data, topic_list, student_list):
                 .grid(row=student+2, column=nb_topic+3)
         # else, make a full Student control button.
         else:
-            StudentCheckbutton(student, bool_topic, bool_student, bool_array, data, window)\
+            StudentCheckbutton(student, bool_topic, bool_student, bool_array, student_list, topic_list, data, window)\
                 .grid(row=student+2, column=nb_topic+3)
 
     # Fill the top and bot zones with topic labels and master checkboxes.
@@ -96,9 +96,9 @@ def gui(data, topic_list, student_list):
                 .grid(row=nb_student+2, column=topic+2)
         # else, make the full topic control top and bottom buttons
         else:
-            TopicCheckbutton(topic, bool_topic, bool_student, bool_array, data, window)\
+            TopicCheckbutton(topic, bool_topic, bool_student, bool_array, student_list, topic_list, data, window)\
                 .grid(row=1, column=topic+2)
-            TopicCheckbutton(topic, bool_topic, bool_student, bool_array, data, window)\
+            TopicCheckbutton(topic, bool_topic, bool_student, bool_array, student_list, topic_list, data, window)\
                 .grid(row=nb_student+2, column=topic+2)
         # draw the bottom label.
         tk.Label(window, text=topic_list[topic])\
@@ -116,7 +116,7 @@ def gui(data, topic_list, student_list):
                     .grid(row=student+2, column=topic+2)
             # otherwise, put a single button
             else:
-                SingleCheckbutton(topic, student, bool_topic, bool_student, bool_array, data, window)\
+                SingleCheckbutton(topic, student, bool_topic, bool_student, bool_array, student_list, topic_list, data, window)\
                     .grid(row=student+2, column=topic+2)
 
     def select_all():
