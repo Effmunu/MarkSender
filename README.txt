@@ -24,7 +24,6 @@ TODO: behaviour of ABORT button in SelectionInterface (quit all the program) ?
 TODO: warning if no mail.
 
 TODO: correct docstrings.
-TODO: rename main into marksender
 TODO: merge and rename build_list_dic (alone in its file).
 
 
