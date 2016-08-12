@@ -38,6 +38,8 @@ def main(argv):
                     help="do everything without actually sending the mails")
 
     args = parser.parse_args()
+    # For now, force dry-run since actual mail sending has not been implemented yet.
+    args.dry_run = True
 
     # the csv file should have semi-colon (;) separated values
     try:
@@ -57,7 +59,7 @@ def main(argv):
     # convert the array
     to_send_array = SelI.to_std_2Darray(bool_array)
 
-    if not args.dry_run:
+    if args.dry_run:
         # loop over students to send the mails
         for iStudent in range(len(student_list)):
             mail_body = mailU.build_body(iStudent, topic_list, data, to_send_array)
