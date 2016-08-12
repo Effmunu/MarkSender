@@ -62,12 +62,10 @@ class TopicCheckbutton(tk.Checkbutton):
         """
         Action to execute when the button is clicked
         """
-        student_nb = len(self.bool_student)
-        topic_nb = len(self.bool_topic)
 
         # if we untick a whole topic
         if not self.bool_topic[self.topic].get():
-            for student in range(student_nb):
+            for student in range(len(self.bool_student)):
                 if self.student_list[student] == "":
                     # if the student line is empty (actually has no header), do nothing
                     continue
@@ -80,7 +78,7 @@ class TopicCheckbutton(tk.Checkbutton):
                 self.bool_student[student].set(False)
         # if we tick a whole topic
         else:
-            for student in range(student_nb):
+            for student in range(len(self.bool_student)):
                 if self.student_list[student] == "":
                     # if the student line is empty (actually has no header), do nothing
                     continue
@@ -89,17 +87,25 @@ class TopicCheckbutton(tk.Checkbutton):
                     continue
                 # tick every box in the column
                 self.bool_array[student][self.topic].set(True)
-                # check completeness of the student line, consider empty line or cell as ticked
-                topic = 0
-                while topic < topic_nb and (self.bool_array[student][topic].get()\
-                                            or self.topic_list[topic] == ""\
-                                            or self.data[student+4][topic+3] == ""):
-                    topic += 1
                 # if the line is complete
-                if topic >= topic_nb:
-                    # set student global selector to 1
-                    self.bool_student[student].set(True)
-                # else the student global selector should already be 0
+                if line_is_complete():                                                            
+                    # set student global selector to 1                                            
+                    self.bool_student[student].set(True)                                          
+                # else the student global selector should already be 0                            
+        
+    def line_is_complete(self):
+        """
+        Check if the student line is complete.                                                    
+        ---------------                                                                           
+        :return: True if complete, else False                                                     
+        """
+        topic = 0                                                                                 
+        while topic < len(self.bool_topic) and(\                                                  
+                self.bool_single[student][topic].get()\ 
+                or self.topic_list[topic] == ""\ 
+                or self.data[student+4][topic+3] == ""):
+            topic += 1
+        return topic >= len(self.bool_topic)                                                      
 
 
 class StudentCheckbutton(tk.Checkbutton):
@@ -157,17 +163,25 @@ class StudentCheckbutton(tk.Checkbutton):
                     continue
                 # tick every box in the column
                 self.bool_array[self.student][topic].set(True)
-                # check completeness of the column, consider empty column or cell as ticked
-                student = 0
-                while student < student_nb and (self.bool_array[student][topic].get()\
-                                                or self.student_list[student] == ""\
-                                                or self.data[student+4][topic+3] == ""):
-                    student += 1
                 # if the line is complete
-                if student >= student_nb:
+                if column_is_complete():
                     # set topic global selector to 1
                     self.bool_topic[topic].set(True)
                 # else the topic global selector should already be 0
+
+    def column_is_complete(self):
+        """
+        Check if the topic column is complete.                                                    
+        ---------------                                                                           
+        :return: True if complete, else False                                                     
+        """
+        student = 0
+        while student < len(self.bool_student) and (\
+                self.bool_single[student][topic].get()\
+                or self.student_list[student] == ""\
+                or self.data[student+4][topic+3] == ""):
+            student += 1
+        return student >= len(self.bool_student)
 
 
 class SingleCheckbutton(tk.Checkbutton):
