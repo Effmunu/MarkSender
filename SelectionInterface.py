@@ -59,12 +59,12 @@ class SelectionInterface(object):
 
         # note that tk.BooleanVar() value is False by default
         # prepare the boolean array for student global controllers
-        self.bool_student = [tk.BooleanVar() for student in range(self.nb_student)]
+        self.bool_student = [tk.BooleanVar() for iStudent in range(self.nb_student)]
         # prepare the boolean array for topic global controllers
-        self.bool_topic = [tk.BooleanVar() for topic in range(self.nb_topic)]
+        self.bool_topic = [tk.BooleanVar() for iTopic in range(self.nb_topic)]
         # prepare the boolean 2D array for single controllers
-        self.bool_single = [[tk.BooleanVar() for topic in range(self.nb_topic)] \
-                                for student in range(self.nb_student)]
+        self.bool_single = [[tk.BooleanVar() for iTopic in range(self.nb_topic)] \
+                                for iStudent in range(self.nb_student)]
 
         # Now display the elements
         self.display_topics()
@@ -81,36 +81,36 @@ class SelectionInterface(object):
         """
 
         # Fill the left and right zones with student labels and master checkboxes.
-        for student in range(self.nb_student):
+        for iStudent in range(self.nb_student):
             # if there is no student (empty line header), disable the left button.
-            if self.student_list[student] == "":
+            if self.student_list[iStudent] == "":
                 tk.Checkbutton(state=tk.DISABLED, master=self.window)\
-                    .grid(row=student+2, column=0)
+                    .grid(row=iStudent+2, column=0)
             # else, make a full Student control button.
             else:
-                StudentCheckbutton(student,
+                StudentCheckbutton(iStudent,
                                 self.bool_topic, self.bool_student, self.bool_single,
                                 self.student_list, self.topic_list, self.data,
                                 self.window)\
-                    .grid(row=student+2, column=0)
+                    .grid(row=iStudent+2, column=0)
 
             # in both case, draw the labels, left and right.
-            tk.Label(self.window, text=self.student_list[student])\
-                .grid(row=student+2, column=1)
-            tk.Label(self.window, text=self.student_list[student])\
-                .grid(row=student+2, column=self.nb_topic+2)
+            tk.Label(self.window, text=self.student_list[iStudent])\
+                .grid(row=iStudent+2, column=1)
+            tk.Label(self.window, text=self.student_list[iStudent])\
+                .grid(row=iStudent+2, column=self.nb_topic+2)
 
             # if there is no student (empty line header), disable the right button.
-            if self.student_list[student] == "":
+            if self.student_list[iStudent] == "":
                 tk.Checkbutton(state=tk.DISABLED, master=self.window)\
-                    .grid(row=student+2, column=self.nb_topic+3)
+                    .grid(row=iStudent+2, column=self.nb_topic+3)
             # else, make a full Student control button.
             else:
-                StudentCheckbutton(student,
+                StudentCheckbutton(iStudent,
                                 self.bool_topic, self.bool_student, self.bool_single,
                                 self.student_list, self.topic_list, self.data,
                                 self.window)\
-                    .grid(row=student+2, column=self.nb_topic+3)
+                    .grid(row=iStudent+2, column=self.nb_topic+3)
 
     #######################################################
     def display_topics(self):
@@ -119,35 +119,35 @@ class SelectionInterface(object):
         """
 
         # Fill the top and bot zones with topic labels and master checkboxes.
-        for topic in range(self.nb_topic):
+        for iTopic in range(self.nb_topic):
             # draw the top label.
-            tk.Label(self.window, text=self.topic_list[topic])\
-                .grid(row=0, column=topic+2)
+            tk.Label(self.window, text=self.topic_list[iTopic])\
+                .grid(row=0, column=iTopic+2)
 
             # if there is no topic (empty column header), disable the top and 
             # bottom buttons
-            if self.topic_list[topic] == "":
+            if self.topic_list[iTopic] == "":
                 tk.Checkbutton(state=tk.DISABLED, master=self.window)\
-                    .grid(row=1, column=topic+2)
+                    .grid(row=1, column=iTopic+2)
                 tk.Checkbutton(state=tk.DISABLED, master=self.window)\
-                    .grid(row=self.nb_student+2, column=topic+2)
+                    .grid(row=self.nb_student+2, column=iTopic+2)
 
             # else, make the full topic control top and bottom buttons
             else:
-                TopicCheckbutton(topic,
+                TopicCheckbutton(iTopic,
                                 self.bool_topic, self.bool_student, self.bool_single,
                                 self.student_list, self.topic_list, self.data,
                                 self.window)\
-                    .grid(row=1, column=topic+2)
-                TopicCheckbutton(topic,
+                    .grid(row=1, column=iTopic+2)
+                TopicCheckbutton(iTopic,
                                 self.bool_topic, self.bool_student, self.bool_single,
                                 self.student_list, self.topic_list, self.data,
                                 self.window)\
-                    .grid(row=self.nb_student+2, column=topic+2)
+                    .grid(row=self.nb_student+2, column=iTopic+2)
 
             # draw the bottom label.
-            tk.Label(self.window, text=self.topic_list[topic])\
-                .grid(row=self.nb_student+3, column=topic+2)
+            tk.Label(self.window, text=self.topic_list[iTopic])\
+                .grid(row=self.nb_student+3, column=iTopic+2)
 
     #######################################################
     def display_single(self):
@@ -156,22 +156,22 @@ class SelectionInterface(object):
         """
 
         # Fill the center zone with the array of checkboxes.
-        for student in range(self.nb_student):
-            for topic in range(self.nb_topic):
+        for iStudent in range(self.nb_student):
+            for iTopic in range(self.nb_topic):
                 # if there are no student or topic header, or the cell is not
                 # filled, the cell should not be clickable.
-                if self.student_list[student] == ""\
-                or self.topic_list[topic] == ""\
-                or self.data[student+4][topic+3] == "":
+                if self.student_list[iStudent] == ""\
+                or self.topic_list[iTopic] == ""\
+                or self.data[iStudent+4][iTopic+3] == "":
                     tk.Checkbutton(state=tk.DISABLED, master=self.window)\
-                        .grid(row=student+2, column=topic+2)
+                        .grid(row=iStudent+2, column=iTopic+2)
                 # otherwise, put a single button
                 else:
-                    SingleCheckbutton(topic, student,
+                    SingleCheckbutton(iTopic, iStudent,
                                     self.bool_topic, self.bool_student, self.bool_single,
                                     self.student_list, self.topic_list, self.data,
                                     self.window)\
-                        .grid(row=student+2, column=topic+2)
+                        .grid(row=iStudent+2, column=iTopic+2)
 
     #######################################################
     def display_aux(self):
@@ -195,22 +195,22 @@ class SelectionInterface(object):
 
     #######################################################
     def select_all(self):
-        for student in range(self.nb_student):
-            for topic in range(self.nb_topic):
-                self.bool_single[student][topic].set(True)
-        for student in range(self.nb_student):
-            self.bool_student[student].set(True)
-        for topic in range(self.nb_topic):
-            self.bool_topic[topic].set(True)
+        for iStudent in range(self.nb_student):
+            for iTopic in range(self.nb_topic):
+                self.bool_single[iStudent][iTopic].set(True)
+        for iStudent in range(self.nb_student):
+            self.bool_student[iStudent].set(True)
+        for iTopic in range(self.nb_topic):
+            self.bool_topic[iTopic].set(True)
 
     def reset(self):
-        for student in range(self.nb_student):
-            for topic in range(self.nb_topic):
-                self.bool_single[student][topic].set(False)
-        for student in range(self.nb_student):
-            self.bool_student[student].set(False)
-        for topic in range(self.nb_topic):
-            self.bool_topic[topic].set(False)
+        for iStudent in range(self.nb_student):
+            for iTopic in range(self.nb_topic):
+                self.bool_single[iStudent][iTopic].set(False)
+        for iStudent in range(self.nb_student):
+            self.bool_student[iStudent].set(False)
+        for iTopic in range(self.nb_topic):
+            self.bool_topic[iTopic].set(False)
 
     def abort(self):
         self.reset()
@@ -222,7 +222,7 @@ class SelectionInterface(object):
 
 def to_std_1Darray(bool_list):
     """
-    Convert a 1D array of Tkinter.BooleanVar into a 1D array of int
+    Convert a 1D array of Tkinter.BooleanVar into a 1D array of int.
     ---------------
     :param bool_single: 1D array of BooleanVar
     :return: 1D array of int
@@ -232,7 +232,7 @@ def to_std_1Darray(bool_list):
 
 def to_std_2Darray(bool_single):
     """
-    Convert a 2D array of Tkinter.BooleanVar into a 2D array of int
+    Convert a 2D array of Tkinter.BooleanVar into a 2D array of int.
     ---------------
     :param bool_single: 2D array of BooleanVar
     :return: 2D array of int
@@ -250,13 +250,13 @@ def print_BooleanVar_map(bool_topic, bool_student, bool_single):
     :param bool_single: array 2D of the booleans for single.
     """
     print '  [',
-    for i in range(len(bool_topic)):
-        print 1 if bool_topic[i].get() else 0, ',',
+    for iTopic in range(len(bool_topic)):
+        print 1 if bool_topic[iTopic].get() else 0, ',',
     print ']'
-    for i in range(len(bool_student)):
-        print 1 if bool_student[i].get() else 0, '[',
-        for j in range(len(bool_topic)):
-            print 1 if bool_single[i][j].get() else 0, ',',
+    for iStudent in range(len(bool_student)):
+        print 1 if bool_student[iStudent].get() else 0, '[',
+        for iTopic in range(len(bool_topic)):
+            print 1 if bool_single[iStudent][iTopic].get() else 0, ',',
         print ']'
 
 
@@ -276,7 +276,7 @@ if __name__ == '__main__':
 		["D","d","","49","","50","52","53","54"]
     ]
 
-    bool_topic, bool_student, bool_array = gui(this_data, this_topic_list, this_student_list)
-    print_BooleanVar_map(bool_topic, bool_student, bool_array)
+    selection_interface = SelectionInterface(this_data, this_topic_list, this_student_list)
+    bool_topic, bool_student, bool_array = selection_interface.get_selection()
 
     sys.exit(0)

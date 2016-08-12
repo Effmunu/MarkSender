@@ -30,7 +30,7 @@ Empty lines/columns (no header in the data array) or cells cannot be selected,
 but are considered as filled when checking for line/column completeness.
 
 :Author: NPAC 2015-2016
-:Date: Created 20 Feb 2016 - Last update 11 Aug 2016
+:Date: Created 20 Feb 2016 - Last update 12 Aug 2016
 :Mail: antoine.laudrain[at]u-psud.fr
 """
 
@@ -49,14 +49,13 @@ class CommonCheckbutton(tk.Checkbutton):
         """
         Common check button for global topic selector.
         ---------------
-        :param topic: topic number
         :param bool_topic: array of the topic booleans
         :param bool_student: array of the student booleans
-        :param bool_single: array of the single booleans
+        :param bool_single: array of the single booleans (2D)
         :param student_list: list of the students as they should appear, needed
-        to check for empty cells
+        to check for empty student headers
         :param topic_list: list of the topics as they should appear, needed to
-        check for empty cells
+        check for empty topic headers
         :param data: data array, needed to check for empty cells
         :param master: see Tkinter.Checkbutton
         """
@@ -70,202 +69,209 @@ class CommonCheckbutton(tk.Checkbutton):
         self.topic_list = topic_list
         self.data = data
 
-    def topic_is_complete(self, topic):
+    def topic_is_complete(self, iTopic):
         """
         Check if the topic column is complete.
         We consider empty cells (no mark) and empty lines (no header) as ticked.
         ---------------
+        :param iTopic: topic index in the bool array to be checked
         :return: True if complete, else False
         """
 
-        student = 0
-        while student < len(self.bool_student) and (\
-                self.bool_single[student][topic].get()\
-                or self.student_list[student] == ""\
-                or self.data[student+4][topic+3] == ""):
-            student += 1
-        return student >= len(self.bool_student)
+        iStudent = 0
+        while iStudent < len(self.bool_student) and (\
+                self.bool_single[iStudent][iTopic].get()\
+                or self.student_list[iStudent] == ""\
+                or self.data[iStudent+4][iTopic+3] == ""):
+            iStudent += 1
+        return iStudent >= len(self.bool_student)
 
-    def student_is_complete(self, student):
+    def student_is_complete(self, iStudent):
         """
         Check if the student line is complete.
         We consider empty cells (no mark) and empty columns (no header) as ticked.
         ---------------
+        :param iStudent: student index in the bool array to be checked
         :return: True if complete, else False
         """
 
-        topic = 0
-        while topic < len(self.bool_topic) and(\
-                self.bool_single[student][topic].get()\
-                or self.topic_list[topic] == ""\
-                or self.data[student+4][topic+3] == ""):
-            topic += 1
-        return topic >= len(self.bool_topic)
+        iTopic = 0
+        while iTopic < len(self.bool_topic) and(\
+                self.bool_single[iStudent][iTopic].get()\
+                or self.topic_list[iTopic] == ""\
+                or self.data[iStudent+4][iTopic+3] == ""):
+            iTopic += 1
+        return iTopic >= len(self.bool_topic)
 
 
 ###########################################################
 class TopicCheckbutton(CommonCheckbutton):
     """
-    Check button for selecting a whole topic
+    Check button for selecting a whole topic.
     """
-    def __init__(self, topic,
+
+    def __init__(self, iTopic,
                 bool_topic, bool_student, bool_single,
                 student_list, topic_list, data,
                 master=None):
         """
-        Check button for global topic selector
-        :param topic: topic number
+        Check button for global topic selector.
+        ---------------
+        :param iTopic: topic index in the bool array
         others: see CommonCheckbutton
         """
 
         CommonCheckbutton.__init__(self,
             bool_topic, bool_student, bool_single,
             student_list, topic_list, data,
-            master, variable=bool_topic[topic], command=self.on_click)
-        self.topic = topic
+            master, variable=bool_topic[iTopic], command=self.on_click)
+        self.iTopic = iTopic
 
     def on_click(self):
         """
-        Action to execute when the button is clicked
+        Action to execute when the button is clicked.
         """
 
         # if we untick a whole topic
-        if not self.bool_topic[self.topic].get():
-            for student in range(len(self.bool_student)):
-                if self.student_list[student] == "":
+        if not self.bool_topic[self.iTopic].get():
+            for iStudent in range(len(self.bool_student)):
+                if self.student_list[iStudent] == "":
                     # if the student line is empty (actually has no header), do nothing
                     continue
-                if self.data[student+4][self.topic+3] == "":
+                if self.data[iStudent+4][self.iTopic+3] == "":
                     # if the cell is not filled, do nothing
                     continue
                 # untick every box in the column
-                self.bool_single[student][self.topic].set(False)
+                self.bool_single[iStudent][self.iTopic].set(False)
                 # untick every student global selector
-                self.bool_student[student].set(False)
+                self.bool_student[iStudent].set(False)
 
         # if we tick a whole topic
         else:
-            for student in range(len(self.bool_student)):
-                if self.student_list[student] == "":
+            for iStudent in range(len(self.bool_student)):
+                if self.student_list[iStudent] == "":
                     # if the student line is empty (actually has no header), do nothing
                     continue
-                if self.data[student+4][self.topic+3] == "":
+                if self.data[iStudent+4][self.iTopic+3] == "":
                     # if the cell is not filled, do nothing
                     continue
                 # tick every box in the column
-                self.bool_single[student][self.topic].set(True)
+                self.bool_single[iStudent][self.iTopic].set(True)
                 # if the line is complete
-                if self.student_is_complete(student):
+                if self.student_is_complete(iStudent):
                     # set student global selector to 1
-                    self.bool_student[student].set(True)
+                    self.bool_student[iStudent].set(True)
                 # else the student global selector should already be 0
 
 
 ###########################################################
 class StudentCheckbutton(CommonCheckbutton):
     """
-    Check button for selecting a whole student
+    Check button for selecting a whole student.
     """
 
-    def __init__(self, student,
+    def __init__(self, iStudent,
                 bool_topic, bool_student, bool_single,
                 student_list, topic_list, data,
                 master=None):
         """
-        Check button for global topic selector
-        :param student: student number
+        Check button for global topic selector.
+        ---------------
+        :param iStudent: student index in the bool array
         others: see CommonCheckbutton
         """
 
         CommonCheckbutton.__init__(self,
             bool_topic, bool_student, bool_single,
             student_list, topic_list, data,
-            master, variable=bool_student[student], command=self.on_click)
-        self.student = student
+            master, variable=bool_student[iStudent], command=self.on_click)
+        self.iStudent = iStudent
 
     def on_click(self):
         """
-        Action to execute when the button is clicked
+        Action to execute when the button is clicked.
         """
 
         # if we untick a whole student
-        if not self.bool_student[self.student].get():
-            for topic in range(len(self.bool_topic)):
-                if self.topic_list[topic] == "":
+        if not self.bool_student[self.iStudent].get():
+            for iTopic in range(len(self.bool_topic)):
+                if self.topic_list[iTopic] == "":
                     # if the topic column is empty (actually has no header), do nothing
                     continue
-                if self.data[self.student+4][topic+3] == "":
+                if self.data[self.iStudent+4][iTopic+3] == "":
                     # if the cell is not filled, do nothing
                     continue
                 # untick every box in the column
-                self.bool_single[self.student][topic].set(False)
+                self.bool_single[self.iStudent][iTopic].set(False)
                 # untick every topic global selector
-                self.bool_topic[topic].set(False)
+                self.bool_topic[iTopic].set(False)
 
         # if we tick a whole student
         else:
-            for topic in range(len(self.bool_topic)):
-                if self.topic_list[topic] == "":
+            for iTopic in range(len(self.bool_topic)):
+                if self.topic_list[iTopic] == "":
                     # if the topic column is empty (actually has no header), do nothing
                     continue
-                if self.data[self.student+4][topic+3] == "":
+                if self.data[self.iStudent+4][iTopic+3] == "":
                     # if the cell is not filled, do nothing
                     continue
                 # tick every box in the column
-                self.bool_single[self.student][topic].set(True)
+                self.bool_single[self.iStudent][iTopic].set(True)
                 # if the line is complete
-                if self.topic_is_complete(topic):
+                if self.topic_is_complete(iTopic):
                     # set topic global selector to 1
-                    self.bool_topic[topic].set(True)
+                    self.bool_topic[iTopic].set(True)
                 # else the topic global selector should already be 0
 
 
 ###########################################################
 class SingleCheckbutton(CommonCheckbutton):
     """
-    Check button for selecting a single topic/student pair
+    Check button for selecting a single topic/student pair.
     """
 
-    def __init__(self, topic, student,
+    def __init__(self, iTopic, iStudent,
                 bool_topic, bool_student, bool_single,
                 student_list, topic_list, data,
                 master=None):
         """
-        Check button for global topic selector
-        :param topic: topic number
-        :param student: student number
+        Check button for global topic selector.
+        ---------------
+        :param iTopic: topic index in the bool array
+        :param iStudent: student index in the bool array
         others: see CommonCheckbutton
         """
 
         CommonCheckbutton.__init__(self,
             bool_topic, bool_student, bool_single,
             student_list, topic_list, data,
-            master, variable=bool_single[student][topic], command=self.on_click)
-        self.topic = topic
-        self.student = student
+            master, variable=bool_single[iStudent][iTopic], command=self.on_click)
+        self.iTopic = iTopic
+        self.iStudent = iStudent
 
     def on_click(self):
         """
-        Action to execute when the button is clicked
+        Action to execute when the button is clicked.
         """
 
         # if we untick a single pair
-        if not self.bool_single[self.student][self.topic].get():
+        if not self.bool_single[self.iStudent][self.iTopic].get():
             # untick corresponding topic global selector
-            self.bool_topic[self.topic].set(False)
+            self.bool_topic[self.iTopic].set(False)
             # untick correponding student global selector
-            self.bool_student[self.student].set(False)
+            self.bool_student[self.iStudent].set(False)
 
         # if we tick a single pair, check if it completes a whole column or line;
         else:
             # completed the whole student line?
-            if self.student_is_complete(self.student):
+            if self.student_is_complete(self.iStudent):
                 # set student global selector to 1
-                self.bool_student[self.student].set(True)
+                self.bool_student[self.iStudent].set(True)
             # else the student global selector should already be 0
 
             # completed the whole topic column?
-            if self.topic_is_complete(self.topic):
+            if self.topic_is_complete(self.iTopic):
                 # set topic global selector to True
-                self.bool_topic[self.topic].set(True)
+                self.bool_topic[self.iTopic].set(True)
             # else the topic global selector should already be False
+

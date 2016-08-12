@@ -12,6 +12,11 @@ Third  line: Max values for each topic
 Fourth line: Min values for each topic
 Following lines: students data
 
+First  column: name of the student
+Second column: first name of the student
+Third  column: email of the student
+Following columns: topics data
+
 Thus the first 3 columns and first 4 lines are reserved space.
 
 :Author: NPAC 2015-2016
@@ -36,7 +41,7 @@ def build_list_dic(file_raw_data, sort_students, sort_topics):
     :param file_raw_data: list of the lines in the CSV file
     :param sort_students: boolean flag for student sorting
     :param sort_topics: boolean flag for topic sorting
-    :returns: data (list of list formatted csv file), topic_list, student_list
+    :return: data (list of list formatted csv file), topic_list, student_list
     """
 
     # readlines returns the list of lines, finishing by '\n', so we remove
@@ -50,23 +55,23 @@ def build_list_dic(file_raw_data, sort_students, sort_topics):
     # Create a dictionary for topics, needed for eventual sorting:
     # columns 0,1,2 are name, surname and email, so skipped
     topic_list = []
-    for topic_nb in range(3, len(data[0])):
-        topic_list.append(data[0][topic_nb])
+    for iTopic in range(3, len(data[0])):
+        topic_list.append(data[0][iTopic])
         # I know I could have a better syntax for this operation
         # (for topic in data[0]... append(topic)) but I keep it for the sake for
         # symmetry with the student part where it is not possible.
     topic_dic = {}
-    for topic_nb in range(len(topic_list)):
-        topic_dic[topic_list[topic_nb]] = topic_nb
+    for iTopic in range(len(topic_list)):
+        topic_dic[topic_list[iTopic]] = iTopic
 
     # Create a dictionary of students, needed for eventual sorting:
     # skip line 0 to 3 since they are the list of subjects, mean, max, min
     student_list = []
-    for student_nb in range(4, len(data)):
-        student_list.append(data[student_nb][0])
+    for iStudent in range(4, len(data)):
+        student_list.append(data[iStudent][0])
     student_dic = {}
-    for student_nb in range(len(student_list)):
-        student_dic[student_list[student_nb]] = student_nb
+    for iStudent in range(len(student_list)):
+        student_dic[student_list[iStudent]] = iStudent
 
     ########################################################
     # alphabetically sort data if options were passed
@@ -80,9 +85,9 @@ def build_list_dic(file_raw_data, sort_students, sort_topics):
         topic_sorted_data = [data[line_nb][0:3] for line_nb in range(len(data))]
         # fill the topic columns
         for topic in topic_list:
-            topic_nb = topic_dic[topic]
+            iTopic = topic_dic[topic]
             for line_nb in range(len(data)):
-                data[line_nb].append( unsorted_data[line_nb][topic_nb + 3] )
+                data[line_nb].append( unsorted_data[line_nb][iTopic + 3] )
 
     if sort_students:
         # sort the list of students
@@ -92,8 +97,8 @@ def build_list_dic(file_raw_data, sort_students, sort_topics):
         data = [unsorted_data[line_nb] for line_nb in range(4)]
         # fill the student lines, loop is ordered
         for student in student_list:
-            student_nb = student_dic[student] # pick the original student number
-            data.append( unsorted_data[student_nb + 4] )
+            iStudent = student_dic[student] # pick the original student number
+            data.append( unsorted_data[iStudent + 4] )
 
     return data, topic_list, student_list
 

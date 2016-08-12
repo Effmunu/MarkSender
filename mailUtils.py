@@ -12,7 +12,7 @@ Should provide build_header
 :Mail: antoine.laudrain[at]u-psud.fr
 """
 
-def build_body(student_nb, topic_list, data, to_send_array):
+def build_body(iStudent, topic_list, data, to_send_array):
     """
     Reminder of data structure:
     First  line: Name, Surname, Email, name of the topics...
@@ -21,7 +21,7 @@ def build_body(student_nb, topic_list, data, to_send_array):
     Fourth line: Min values for each topic
     Following lines: students data
     ---------------
-    :param student_nb: line number of the student
+    :param iStudent: line number of the student
     :param topic_list: list of the topics, in the order read in the csv file
     :param data: the full data table (list of list formatted csv file)
     :param to_send_array: std boolean array received after the gui
@@ -30,20 +30,20 @@ def build_body(student_nb, topic_list, data, to_send_array):
     """
     msg = "Hello,\n"
     nb_topics_to_send = 0
-    for topic_nb in range(len(topic_list)):
+    for iTopic in range(len(topic_list)):
         # if the topic has not been selected for this student
-        if not to_send_array[student_nb][topic_nb]:
+        if not to_send_array[iStudent][iTopic]:
             continue
         # if no mark was entered for this student at this topic
-        if data[student_nb+4][topic_nb+3] == '':
+        if data[iStudent+4][iTopic+3] == '':
             continue
         nb_topics_to_send += 1
         line_buffer = "Your mark for %s is %s. Mean is %s, highest grade is %s, lowest grade is %s.\n" \
-            % (topic_list[topic_nb], \
-            data[student_nb+4][topic_nb+3], \
-            data[1][topic_nb+3], \
-            data[2][topic_nb+3], \
-            data[3][topic_nb+3])
+            % (topic_list[iTopic], \
+            data[iStudent+4][iTopic+3], \
+            data[1][iTopic+3], \
+            data[2][iTopic+3], \
+            data[3][iTopic+3])
         msg += line_buffer
     msg += "Have a good day,\n"
     msg += "Antoine Laudrain"

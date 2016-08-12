@@ -58,12 +58,13 @@ def main(argv):
     to_send_array = SelI.to_std_2Darray(bool_array)
 
     if not args.dry_run:
-        for student_nb in range(len(student_list)):
-            mail_body = mailU.build_body(student_nb, topic_list, data, to_send_array)
+        # loop over students to send the mails
+        for iStudent in range(len(student_list)):
+            mail_body = mailU.build_body(iStudent, topic_list, data, to_send_array)
             if mail_body == "":
                 continue
-            mailU.send_mail_fake(data[student_nb+4][2], mail_body)
-            # column 2 contains the mails
+            mailU.send_mail_fake(data[iStudent+4][2], mail_body)
+            # column 2 contains the email addresses
 
 
 
