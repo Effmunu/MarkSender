@@ -82,7 +82,7 @@ def build_list_dic(file_raw_data, sort_students, sort_topics):
         topic_list.sort()
         unsorted_data = copy.deepcopy(data)
         # fill the 3 first columns for all lines
-        topic_sorted_data = [data[line_nb][0:3] for line_nb in range(len(data))]
+        data = [unsorted_data[line_nb][0:3] for line_nb in range(len(data))]
         # fill the topic columns
         for topic in topic_list:
             iTopic = topic_dic[topic]
