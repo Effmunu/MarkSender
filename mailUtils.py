@@ -8,7 +8,7 @@ Mail utils for the send_mark project. Provides:
 Should provide build_header
 
 :Author: NPAC 2015-2016
-:Date: 20 Feb 2016
+:Date: 20 Feb 2016 - Last update 12 Aug 2016
 :Mail: antoine.laudrain[at]u-psud.fr
 """
 
@@ -28,7 +28,12 @@ def build_body(iStudent, topic_list, data, to_send_array):
     :return: "" if nothing is to be sent (no registered mark or no topic
     selected). Message body otherwise.
     """
-    msg = "Hello,\n"
+
+    # opening of the message
+    opening = "Hello,\n"
+
+    # core of the message
+    core = ""
     nb_topics_to_send = 0
     for iTopic in range(len(topic_list)):
         # if the topic has not been selected for this student
@@ -44,9 +49,12 @@ def build_body(iStudent, topic_list, data, to_send_array):
             data[1][iTopic+3], \
             data[2][iTopic+3], \
             data[3][iTopic+3])
-        msg += line_buffer
-    msg += "Have a good day,\n"
-    msg += "Antoine Laudrain"
+        core += line_buffer
+
+    # closing of the message
+    closing = ""
+    closing += "Have a good day,\n"
+    closing += "Antoine Laudrain"
 
     # if no mark was registered in the database or no topic selected,
     # no need for sending a message.
@@ -54,7 +62,7 @@ def build_body(iStudent, topic_list, data, to_send_array):
         return ""
     # else, returns the message
     else:
-        return msg
+        return opening + core + closing
 
 
 def send_mail_fake(mail_add, body):
