@@ -15,7 +15,7 @@ Following lines: students data
 Thus the first 3 columns and first 4 lines are reserved space.
 
 :Author: NPAC 2015-2016
-:Date: August 2016
+:Date: Created 20 Feb 2016 - Last update 7 Aug 2016
 :Mail: antoine.laudrain[at]u-psud.fr
 """
 
@@ -32,7 +32,7 @@ def build_list_dic(file_raw_data, sort_students, sort_topics):
     The students/topics dictionary is used for sorting. It associates the
     line/column number of the student/topic in the file read, so before sorting.
     Dictionnaries: keys = names; values = line/column number.
-    -------------------------------------------------------
+    ---------------
     :param file_raw_data: list of the lines in the CSV file
     :param sort_students: boolean flag for student sorting
     :param sort_topics: boolean flag for topic sorting

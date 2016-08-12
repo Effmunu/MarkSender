@@ -8,7 +8,7 @@ Build the mails.
 Send the mails
 
 :Author: NPAC 2015-2016
-:Date: August 2016
+:Date: Created 20 Feb 2016 - Last update 11 Aug 2016
 :Mail: antoine.laudrain[at]u-psud.fr
 """
 

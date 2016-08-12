@@ -261,15 +261,22 @@ def print_BooleanVar_map(bool_topic, bool_student, bool_single):
 
 
 if __name__ == '__main__':
-    this_topic_list = ['AC_total', 'Nuclei_final', 'Cosmo_final', 'GR', 
-                       'Nuclei_total', 'Detectors', 'QFT_midterm',
-                       'Nuclei_midterm', 'Accelerators', 'TL',
-                       'Particles_final', 'QFT_total', 'Astro_midterm', 
-                       'Particles_total', 'QFT_final', 'Particles_midterm']
-    this_topic_list.sort()
-    this_student_list = ['A', 'B', 'C', 'D']
+    this_topic_list = ["Topic1", "", "Topic2", "Topic3", "Topic4"]
+    this_student_list = ['A', 'B', '', 'E', 'C', 'D']
+    this_data = [
+		["Name","Surname","mail","Topic1","","Topic2","Topic3","Topic4",""],
+		["Mean","","","25","","26","28","29","30"],
+		["Highest","","","49","","50","52","53","54"],
+		["Lowest","","","1","","2","4","5","6"],
+		["A","a","a.a@a.a","1","","2","4","5","6"],
+		["B","b","b.b@b.b","17","","18","20","21","22"],
+		["","","","","","","","",""],
+		["E","e","e.e@e.e","18","","23","39","14","23"],
+		["C","c","c.c@c.c","33","","","36","37",""],
+		["D","d","","49","","50","52","53","54"]
+    ]
 
-    bool_topic, bool_student, bool_single = gui(this_topic_list, this_student_list)
-    print_BooleanVar_map(bool_topic, bool_student, bool_single)
+    bool_topic, bool_student, bool_array = gui(this_data, this_topic_list, this_student_list)
+    print_BooleanVar_map(bool_topic, bool_student, bool_array)
 
     sys.exit(0)
