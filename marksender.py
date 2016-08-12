@@ -14,7 +14,7 @@ Send the mails
 
 import sys
 import argparse
-import SelectionInterface as seli
+import SelectionInterface as SelI
 from retrieve_marks import build_list_dic
 import mailUtils as mailU
 
@@ -52,9 +52,10 @@ def main(argv):
         args.sort_students, args.sort_topics)
 
     # open the selection interface
-    _, _, bool_array = seli.gui(data, topic_list, student_list)
+    selection_interface = SelI.SelectionInterface(data, topic_list, student_list)
+    _, _, bool_array = selection_interface.get_selection()
     # convert the array
-    to_send_array = seli.to_std_2Darray(bool_array)
+    to_send_array = SelI.to_std_2Darray(bool_array)
 
     if not args.dry_run:
         for student_nb in range(len(student_list)):
